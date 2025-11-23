@@ -30,49 +30,54 @@ const Contact: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Construct the email body
-      const body = `
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Enquiry Type: ${formData.enquiryType}
-Check-in: ${formData.checkIn}
-Check-out: ${formData.checkOut}
-
-Message:
-${formData.message}
-      `.trim();
-
-      // Create mailto link
-      const mailtoLink = `mailto:samruddhishinde999@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(body)}`;
-
-      // Create a temporary link element and click it
-      const link = document.createElement('a');
-      link.href = mailtoLink;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      toast({
-        title: 'Opening Email Client',
-        description: 'Please send the generated email to complete your enquiry.',
+      const response = await fetch("https://formsubmit.co/ajax/samruddhishinde999@gmail.com", {
+        method: "POST",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          enquiry_type: formData.enquiryType,
+          check_in: formData.checkIn,
+          check_out: formData.checkOut,
+          message: formData.message,
+          _subject: `New Enquiry: ${formData.subject}`, // Custom subject for the email
+          _template: "table", // Use a table template for the email
+          _captcha: "false" // Disable captcha for smoother experience
+        })
       });
 
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        enquiryType: '',
-        checkIn: '',
-        checkOut: '',
-        message: ''
-      });
+      const result = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: 'Message Sent Successfully!',
+          description: 'We have received your enquiry and will get back to you soon.',
+        });
+
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          enquiryType: '',
+          checkIn: '',
+          checkOut: '',
+          message: ''
+        });
+      } else {
+        throw new Error(result.message || 'Failed to send message');
+      }
+
     } catch (error) {
       console.error('Contact form error:', error);
       toast({
         title: 'Error',
-        description: 'Could not open email client. Please email us directly at samruddhishinde999@gmail.com',
+        description: 'Failed to send message. Please try again later or email us directly.',
         variant: 'destructive'
       });
     } finally {
