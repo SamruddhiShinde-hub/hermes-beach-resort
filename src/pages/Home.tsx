@@ -61,7 +61,7 @@ const Home: React.FC = () => {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920&q=80"
+            src="/images/hermes-waterpark.png"
             alt="Hermes Resort Beach View"
             className="w-full h-full object-cover"
           />

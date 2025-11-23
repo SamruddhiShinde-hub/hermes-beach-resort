@@ -91,7 +91,7 @@ const Contact: React.FC = () => {
       <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80"
+            src="/images/hermes-waterpark.png"
             alt="Contact Us"
             className="w-full h-full object-cover"
           />
