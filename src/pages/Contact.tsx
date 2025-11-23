@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import emailjs from '@emailjs/browser';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -47,8 +46,12 @@ ${formData.message}
       // Create mailto link
       const mailtoLink = `mailto:samruddhishinde999@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(body)}`;
 
-      // Open email client
-      window.location.href = mailtoLink;
+      // Create a temporary link element and click it
+      const link = document.createElement('a');
+      link.href = mailtoLink;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
       toast({
         title: 'Opening Email Client',
@@ -66,9 +69,10 @@ ${formData.message}
         message: ''
       });
     } catch (error) {
+      console.error('Contact form error:', error);
       toast({
         title: 'Error',
-        description: 'Failed to open email client.',
+        description: 'Could not open email client. Please email us directly at samruddhishinde999@gmail.com',
         variant: 'destructive'
       });
     } finally {
