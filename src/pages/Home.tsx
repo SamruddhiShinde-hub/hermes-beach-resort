@@ -210,7 +210,7 @@ const Home: React.FC = () => {
               className="relative h-[500px] rounded-lg overflow-hidden luxury-shadow order-2 lg:order-1"
             >
               <img
-                src="https://images.unsplash.com/photo-1519167758481-83f29da8c31c?w=800&q=80"
+                src="/images/beach-wedding.jpg"
                 alt="Beach Wedding"
                 className="w-full h-full object-cover"
               />
