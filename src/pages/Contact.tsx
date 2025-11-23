@@ -194,6 +194,11 @@ const Contact: React.FC = () => {
               </h2>
 
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Hidden inputs for FormSubmit configuration */}
+                <input type="hidden" name="_subject" value={`New Enquiry from ${formData.name}`} />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_captcha" value="false" />
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-2">Name *</label>
@@ -303,7 +308,7 @@ const Contact: React.FC = () => {
                   className="w-full bg-gradient-gold hover:opacity-90 transition-opacity"
                   size="lg"
                 >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                  {isSubmitting ? 'Sending...' : 'Send Message Directly'}
                 </Button>
               </form>
             </motion.div>
