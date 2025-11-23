@@ -30,7 +30,7 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed top-0 w-full z-50 transition-all duration-300 text-white pt-6 pb-4">
+    <header className="absolute top-0 w-full z-50 transition-all duration-300 text-white pt-6 pb-4">
       <div className="container mx-auto px-8">
         <div className="flex items-center justify-between">
           {/* Left Links */}
