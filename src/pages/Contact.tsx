@@ -31,27 +31,28 @@ const Contact: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // EmailJS configuration - Replace with your actual credentials
-      await emailjs.send(
-        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
-        {
-          to_email: 'samruddhishinde999@gmail.com',
-          from_name: formData.name,
-          from_email: formData.email,
-          phone: formData.phone,
-          subject: formData.subject,
-          enquiry_type: formData.enquiryType,
-          check_in: formData.checkIn,
-          check_out: formData.checkOut,
-          message: formData.message
-        },
-        'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
-      );
+      // Construct the email body
+      const body = `
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Enquiry Type: ${formData.enquiryType}
+Check-in: ${formData.checkIn}
+Check-out: ${formData.checkOut}
+
+Message:
+${formData.message}
+      `.trim();
+
+      // Create mailto link
+      const mailtoLink = `mailto:samruddhishinde999@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(body)}`;
+
+      // Open email client
+      window.location.href = mailtoLink;
 
       toast({
-        title: 'Message Sent!',
-        description: 'Thank you for contacting us. We will get back to you soon.',
+        title: 'Opening Email Client',
+        description: 'Please send the generated email to complete your enquiry.',
       });
 
       setFormData({
@@ -67,7 +68,7 @@ const Contact: React.FC = () => {
     } catch (error) {
       toast({
         title: 'Error',
-        description: 'Failed to send message. Please try again or contact us directly.',
+        description: 'Failed to open email client.',
         variant: 'destructive'
       });
     } finally {
