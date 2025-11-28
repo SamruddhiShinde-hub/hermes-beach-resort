@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMenu, FiX, FiUser, FiLogOut } from "react-icons/fi";
 import { useAuth } from "@/context/AuthContext";
@@ -9,6 +9,16 @@ export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isLightPage = ["/book", "/login", "/my-bookings"].includes(
+    location.pathname
+  );
+  const headerColor = isMenuOpen
+    ? "text-white"
+    : isLightPage
+    ? "text-primary"
+    : "text-white";
 
   const navItems = [
     { label: "Home", path: "/" },
@@ -30,7 +40,9 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className='absolute top-0 w-full z-50 transition-all duration-300 text-white pt-6 pb-4'>
+    <header
+      className={`absolute top-0 w-full z-50 transition-all duration-300 pt-6 pb-4 ${headerColor}`}
+    >
       <div className='container mx-auto px-8'>
         <div className='flex items-center justify-between'>
           {/* Left Links */}
